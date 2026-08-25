@@ -1,0 +1,40 @@
+# Python-generated files
+__pycache__/
+build/
+dist/
+wheels/
+*.egg-info/
+*.py[cod] 
+
+# Virtual environments
+.venv/
+
+# Environment variables
+env.py
+.env
+.env.*
+!.env.example
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Type checking / linting
+.ty/
+.ruff_cache/
+.django-stub-gen/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/

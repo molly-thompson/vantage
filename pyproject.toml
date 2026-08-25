@@ -1,0 +1,39 @@
+[project]
+name = "vantage"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=6.1",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.2",
+    "pytest>=9.1.1",
+    "pytest-django>=4.14.0",
+    "python-dotenv>=1.2.3",
+    "ruff>=0.16.4",
+    "ty>=0.0.74",
+]
+[tool.ruff]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W", 
+    "F", 
+    "I",
+    "B",
+    "UP"
+]
+
+[tool.ruff.format]
+
+[tool.ty.environment]
+python-version = "3.14"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
