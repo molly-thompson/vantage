@@ -1,4 +1,12 @@
-# Summary
+---
+name: Bug report
+about: Report a reproducible bug
+title: "[Bug]: "
+labels: bug
+assignees: ""
+---
+
+## Summary
 
 <!-- Brief description of the bug -->
 
