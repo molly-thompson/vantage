@@ -16,3 +16,19 @@ dev = [
     "ruff>=0.16.4",
     "ty>=0.0.74",
 ]
+[tool.ruff]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W", 
+    "F", 
+    "I",
+    "B",
+    "UP"
+]
+
+[tool.ruff.format]
+
+[tool.ty.environment]
+python-version = "3.14"
