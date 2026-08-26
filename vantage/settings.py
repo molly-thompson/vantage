@@ -25,11 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment configuration & assign settings accordingly
 load_dotenv()
 
-# If secret key not configured, end immediately
+# If secret key or db  not configured, end immediately
 SECRET_KEY = os.environ["SECRET_KEY"]
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 # If debug setting not configured, default to safer value
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -37,6 +44,11 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 
 # Application definition
 
