@@ -1,7 +1,7 @@
 [project]
 name = "vantage"
 version = "0.1.0"
-description = "Add your description here"
+description = "A developer telemetry platform for monitoring and analysing application health and performance."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
@@ -35,5 +35,5 @@ select = [
 python-version = "3.14"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "config.settings"
+DJANGO_SETTINGS_MODULE = "vantage.settings"
 python_files = ["test_*.py"]
