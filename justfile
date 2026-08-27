@@ -1,20 +1,20 @@
 # List available commands
 default: 
-		just --list
+	just --list
 
 
 # Get started
 setup:
-		uv sync
-		just migrate
+	uv sync
+	just migrate
 
 # Update database with changes
 migrate:
-		uv run python manage.py migrate
+	uv run python manage.py migrate
 
 # Record schema changes as migration files
 makemigrations app="":
-		uv run python manage.py makemigrations {{app}}
+	uv run python manage.py makemigrations {{app}}
 
 # Build Tailwind CSS files
 tailwind *args:
@@ -25,7 +25,7 @@ tailwind *args:
 
 # Run Django development server
 runserver:
-		uv run python manage.py runserver
+	uv run python manage.py runserver
 
 # Run Django server with Tailwind hot-reloading
 dev:
@@ -36,7 +36,7 @@ shell:
     uv run python manage.py shell
 
 # Run Ruff lint watcher
-watch:
+lint-watch:
     just lint --watch
 
 

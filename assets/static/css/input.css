@@ -1,0 +1,10 @@
+/* stylelint-disable at-rule-no-unknown */
+/* stylelint-disable import-notation */
+@import "tailwindcss";
+
+/* Relative path to DaisyUI bundle files */
+@plugin "./../../../build/daisyui.mjs";
+
+@plugin "./../../../build/daisyui-theme.mjs" {
+	/* custom theme here */
+}
