@@ -18,6 +18,9 @@ dev = [
     "ty>=0.0.74",
 ]
 [tool.ruff]
+exclude = [
+    "assets/static/css/output.css",
+]
 
 [tool.ruff.lint]
 select = [

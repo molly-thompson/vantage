@@ -1,43 +1,53 @@
+# Set TAILWIND_BIN according to .env config; else set to default 
+set dotenv-required
+set dotenv-load
+TAILWIND_BIN := env("TAILWIND_BIN", justfile_directory() / "build_files" / "tailwindcss")
+
+
 # List available commands
 default: 
-		just --list
+	just --list
 
 
 # Get started
 setup:
-		uv sync
-		just migrate
+	uv sync
+	just migrate
 
 # Update database with changes
 migrate:
-		uv run python manage.py migrate
+	uv run python manage.py migrate
 
 # Record schema changes as migration files
 makemigrations app="":
-		uv run python manage.py makemigrations {{app}}
+	uv run python manage.py makemigrations {{app}}
 
 # Build Tailwind CSS files
-tailwind *args:
-    tailwindcss -i ./static/css/input.css -o ./static/css/output.css {{args}}
+tailwind:
+    {{TAILWIND_BIN}} -i ./assets/static/css/input.css -o ./assets/static/css/output.css
 
 
 # ENTER PROCESSES
 
 # Run Django development server
 runserver:
-		uv run python manage.py runserver
+	uv run python manage.py runserver
 
 # Run Django server with Tailwind hot-reloading
-dev:
-		just --parallel runserver tailwind --watch
+[parallel]
+dev: runserver tailwind-watch
 
 # Enter interactive Django shell
 shell:
     uv run python manage.py shell
 
 # Run Ruff lint watcher
-watch:
+lint-watch:
     just lint --watch
+
+# Run Tailwind watcher
+tailwind-watch:
+    {{TAILWIND_BIN}} -i ./assets/static/css/input.css -o ./assets/static/css/output.css --watch
 
 
 # TIDYING & CHECKING: COMPOUND COMMANDS
