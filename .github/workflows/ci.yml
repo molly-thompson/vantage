@@ -29,9 +29,22 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v10.0.1
+        with:
+          enable-cache: true
 
       - name: Install dependencies
         run: uv sync --locked
+
+      - name: Install Tailwind CLI
+        run: |
+          curl -L https://github.com/tailwindlabs/tailwindcss/releases/download/v4.3.3/tailwindcss-linux-x64 -o build_files/tailwindcss
+          chmod +x build_files/tailwindcss
+      
+      - name: Build Tailwind CSS
+        run: |
+          ./build_files/tailwindcss \
+          -i ./assets/static/css/input.css \
+          -o ./assets/static/css/output.css
 
       - name: Lint
         run: uv run ruff check .

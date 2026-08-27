@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 /* Relative path to DaisyUI bundle files */
-@plugin "./../../../build/daisyui.mjs";
+@plugin "./../../../build_files/daisyui.mjs";
 
-@plugin "./../../../build/daisyui-theme.mjs" {
+@plugin "./../../../build_files/daisyui-theme.mjs" {
 	/* custom theme here */
 }
