@@ -5,7 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "dj-database-url>=3.1.2",
     "django>=6.1",
+    "django-allauth>=65.19,<66",
+    "psycopg[binary,pool]>=3.3.4",
 ]
 
 [dependency-groups]
