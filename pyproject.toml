@@ -38,7 +38,7 @@ strict = true
 ignore_missing_imports = true
 exclude = [
     "manage.py", 
-    "*/migrations/",
+    "/migrations/",
     "build_files",
 ]
 
