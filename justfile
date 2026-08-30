@@ -75,9 +75,9 @@ lint *args:
 format *args:
     uv run ruff format {{args}}
 
-# Run ty typecheck
+# Run mypy typecheck
 typecheck:
-    uv run ty check
+    uv run mypy .
 
 # Run pytest test suite
 test:

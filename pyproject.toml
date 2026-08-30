@@ -13,12 +13,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "django-stubs[compatible-mypy]>=6.1.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "pytest-django>=4.14.0",
     "python-dotenv>=1.2.3",
     "ruff>=0.16.4",
-    "ty>=0.0.74",
 ]
 [tool.ruff]
 exclude = [
@@ -37,8 +37,14 @@ select = [
 
 [tool.ruff.format]
 
-[tool.ty.environment]
-python-version = "3.14"
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+strict = true
+ignore_missing_imports = true
+exclude = ["manage.py"]
+
+[tool.django-stubs]
+django_settings_module = "vantage.settings"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "vantage.settings"
