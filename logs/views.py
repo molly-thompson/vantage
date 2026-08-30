@@ -1,6 +1,6 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Logs loads")

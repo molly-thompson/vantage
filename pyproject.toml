@@ -5,38 +5,52 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "dj-database-url>=3.1.2",
     "django>=6.1",
+    "django-allauth>=65.19,<66",
+    "psycopg[binary,pool]>=3.3.4",
 ]
 
 [dependency-groups]
 dev = [
+    "django-stubs[compatible-mypy]>=6.1.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "pytest-django>=4.14.0",
     "python-dotenv>=1.2.3",
     "ruff>=0.16.4",
-    "ty>=0.0.74",
 ]
 [tool.ruff]
 exclude = [
     "assets/static/css/output.css",
+    "*/migrations/",
+    "build_files"
 ]
 
 [tool.ruff.lint]
-select = [
-    "E",
-    "W", 
-    "F", 
-    "I",
-    "B",
-    "UP"
-]
+select = ["E", "W", "F", "I", "B", "UP"]
 
 [tool.ruff.format]
 
-[tool.ty.environment]
-python-version = "3.14"
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+strict = true
+ignore_missing_imports = true
+exclude = [
+    "manage.py", 
+    "/migrations/",
+    "build_files",
+]
 
-[tool.pytest.ini_options]
+[tool.django-stubs]
+django_settings_module = "vantage.settings"
+
+[tool.pytest]
 DJANGO_SETTINGS_MODULE = "vantage.settings"
-python_files = ["test_*.py"]
+testpaths = [
+    "tests/test_accounts",
+    "tests/test_app_functionality",
+    "tests/test_core",
+    "tests/test_logs",
+    "tests/test_systems",
+]

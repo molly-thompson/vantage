@@ -26,6 +26,7 @@ coverage.xml
 .ty/
 .ruff_cache/
 .django-stub-gen/
+./mypy_cache
 
 # Django
 db.sqlite3
