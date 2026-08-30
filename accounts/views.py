@@ -1,6 +1,6 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 
 
-def index(request):
-    return HttpResponse("Accounts loads")
+def dashboard(request: HttpRequest) -> HttpResponse:
+    return HttpResponse("Accounts dashboard loads")
