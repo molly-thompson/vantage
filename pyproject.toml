@@ -23,17 +23,12 @@ dev = [
 [tool.ruff]
 exclude = [
     "assets/static/css/output.css",
+    "*/migrations/",
+    "build_files"
 ]
 
 [tool.ruff.lint]
-select = [
-    "E",
-    "W", 
-    "F", 
-    "I",
-    "B",
-    "UP"
-]
+select = ["E", "W", "F", "I", "B", "UP"]
 
 [tool.ruff.format]
 
