@@ -1,8 +1,10 @@
+from django.test import Client
 from django.urls import reverse
 
 
-def test_accounts_index_view(client):
-    response = client.get(reverse("accounts:index"))
+# TESTS FOR PROJECT URL ENDPOINTS
+def test_accounts_dashboard_view(client: Client) -> None:
+    response = client.get(reverse("accounts:dashboard"))
 
     assert response.status_code == 200
-    assert response.content == b"Accounts loads"
+    assert response.content == b"Accounts dashboard loads"
