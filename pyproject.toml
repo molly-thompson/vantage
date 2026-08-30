@@ -36,7 +36,11 @@ select = ["E", "W", "F", "I", "B", "UP"]
 plugins = ["mypy_django_plugin.main"]
 strict = true
 ignore_missing_imports = true
-exclude = ["manage.py"]
+exclude = [
+    "manage.py", 
+    "*/migrations/",
+    "build_files",
+]
 
 [tool.django-stubs]
 django_settings_module = "vantage.settings"
