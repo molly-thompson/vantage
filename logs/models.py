@@ -89,3 +89,29 @@ class Log(models.Model):
 
     def __str__(self) -> str:
         return f"[{self.severity}] {self.title}"
+
+
+class IncidentNote(models.Model):
+    class Meta:
+        ordering = ["created_at"]
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    log_entry = models.ForeignKey(Log, on_delete=models.CASCADE, related_name="notes")
+    creator = models.ForeignKey(
+        User,
+        on_delete=models.SET(get_sentinel_user),
+        null=True,
+        blank=True,
+        related_name="created_incident_notes",
+    )
+    content = models.TextField()
+    parent_note = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.RESTRICT,
+        related_name="child_notes",
+    )
+
+    def __str__(self) -> str:
+        return f"Note by {self.creator}"
