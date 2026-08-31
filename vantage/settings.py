@@ -61,9 +61,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "core",
-    "logs",
+    # Third-party
+    "allauth",
+    "allauth.account",
+    # Local
+    "accounts.apps.AccountsConfig",
+    "core.apps.CoreConfig",
+    "logs.apps.LogsConfig",
 ]
 
 MIDDLEWARE = [
@@ -74,6 +78,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "vantage.urls"
@@ -105,6 +110,28 @@ DATABASES = {
         conn_health_checks=True,
     ),
 }
+
+# Authentication
+AUTH_USER_MODEL = "accounts.User"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+ACCOUNT_LOGIN_METHODS = {"email"}
+
+ACCOUNT_SIGNUP_FIELDS = [
+    "first_name*",
+    "last_name*",
+    "email*",
+    "password1*",
+    "password2*",
+]
+
+LOGIN_REDIRECT_URL = "/account/dashboard"
+
+LOGOUT_REDIRECT_URL = "/"
 
 
 # Password validation
