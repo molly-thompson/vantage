@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "core.apps.CoreConfig",
     "logs.apps.LogsConfig",
+    "systems.apps.SystemsConfig",
 ]
 
 MIDDLEWARE = [
