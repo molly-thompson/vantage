@@ -38,3 +38,15 @@
   --depth: 1;
   --noise: 1;
 }
+
+@theme {
+	--font-sans: "Inter", sans-serif;
+	--font-mono: "IBM Plex Mono", monospace;
+	--color-teal-50: oklch(95.349% 0.02296 173.123);
+	--color-teal-100: oklch(85.93% 0.07347 171.848);
+	--color-teal-200: oklch(76.47% 0.11489 168.377);
+	--color-teal-400: oklch(62.307% 0.12316 165.53);
+	--color-teal-600: oklch(48.086% 0.09077 170.14);
+	--color-teal-800: oklch(38.632% 0.07032 173.889);
+	--color-muted-content: oklch(62.214% 0.01031 100.154);
+}
