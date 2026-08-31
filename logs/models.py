@@ -1,11 +1,26 @@
-from typing import override
+from typing import Any, override
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.text import slugify
 
 from accounts.models import User
 from logs.helpers import get_sentinel_user
 from systems.models import ApiEntity
+
+
+class LogTag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"#{self.name}"
+
+    @override
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class Log(models.Model):
