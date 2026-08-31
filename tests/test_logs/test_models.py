@@ -1,10 +1,10 @@
 import pytest
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
-from django.db.models.deletion import ProtectedError
+from django.db.models.deletion import ProtectedError, RestrictedError
 
 from accounts.models import User
-from logs.models import Log, LogTag
+from logs.models import IncidentNote, Log, LogTag
 from systems.models import ApiEntity, System
 
 # TESTS FOR LOG MODEL
@@ -261,3 +261,201 @@ def test_log_ordering(user: User) -> None:
     )
 
     assert list(Log.objects.all()) == [newer_log, older_log]
+
+
+# TESTS FOR INCIDENTNOTE
+
+
+@pytest.mark.django_db
+def test_incident_note_can_be_created(log: Log, user: User) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    assert note.log_entry == log
+    assert note.creator == user
+    assert note.content == "Investigating the issue."
+    assert note.parent_note is None
+    assert note.created_at is not None
+
+
+@pytest.mark.django_db
+def test_incident_note_requires_log(user: User) -> None:
+    note = IncidentNote(
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    with pytest.raises(ValidationError):
+        note.full_clean()
+
+
+@pytest.mark.django_db
+def test_incident_note_creator_is_optional(log: Log) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        content="System note.",
+    )
+
+    assert note.creator is None
+
+
+@pytest.mark.django_db
+def test_incident_note_content_is_required(log: Log, user: User) -> None:
+    note = IncidentNote(
+        log_entry=log,
+        creator=user,
+    )
+
+    with pytest.raises(ValidationError):
+        note.full_clean()
+
+
+@pytest.mark.django_db
+def test_log_notes_relationship(log: Log, user: User) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    assert list(log.notes.all()) == [note]
+
+
+@pytest.mark.django_db
+def test_user_created_incident_notes_relationship(log: Log, user: User) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    assert list(user.created_incident_notes.all()) == [note]
+
+
+@pytest.mark.django_db
+def test_incident_note_can_have_parent(log: Log, user: User) -> None:
+    parent_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Initial investigation.",
+    )
+    child_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Following up.",
+        parent_note=parent_note,
+    )
+
+    assert child_note.parent_note == parent_note
+    assert list(parent_note.child_notes.all()) == [child_note]
+
+
+@pytest.mark.django_db
+def test_incident_note_can_have_multiple_children(log: Log, user: User) -> None:
+    parent_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Initial investigation.",
+    )
+    child_one = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="First follow-up.",
+        parent_note=parent_note,
+    )
+    child_two = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Second follow-up.",
+        parent_note=parent_note,
+    )
+
+    assert parent_note.child_notes.count() == 2
+    assert set(parent_note.child_notes.all()) == {child_one, child_two}
+
+
+@pytest.mark.django_db
+def test_deleting_log_deletes_incident_notes(log: Log, user: User) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    note_id = note.pk
+    log.delete()
+
+    assert not IncidentNote.objects.filter(pk=note_id).exists()
+
+
+@pytest.mark.django_db
+def test_deleting_user_replaces_note_creator_with_sentinel_user(
+    log: Log,
+    user: User,
+) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    user.delete()
+    note.refresh_from_db()
+
+    sentinel_user = note.creator
+
+    assert sentinel_user is not None
+    assert sentinel_user.email == "deleted@vantage.invalid"
+    assert sentinel_user.first_name == "Deleted"
+    assert sentinel_user.last_name == "User"
+
+
+@pytest.mark.django_db
+def test_deleting_parent_note_is_restricted(log: Log, user: User) -> None:
+    parent_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Initial investigation.",
+    )
+    child_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Follow-up.",
+        parent_note=parent_note,
+    )
+
+    with pytest.raises(RestrictedError):
+        parent_note.delete()
+
+    assert IncidentNote.objects.filter(pk=parent_note.pk).exists()
+    assert IncidentNote.objects.filter(pk=child_note.pk).exists()
+
+
+@pytest.mark.django_db
+def test_incident_note_str(log: Log, user: User) -> None:
+    note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Investigating the issue.",
+    )
+
+    assert str(note) == f"Note by {user}"
+
+
+@pytest.mark.django_db
+def test_incident_note_ordering(log: Log, user: User) -> None:
+    older_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="First note.",
+    )
+    newer_note = IncidentNote.objects.create(
+        log_entry=log,
+        creator=user,
+        content="Second note.",
+    )
+
+    assert list(IncidentNote.objects.all()) == [older_note, newer_note]
