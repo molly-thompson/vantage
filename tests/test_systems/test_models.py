@@ -2,7 +2,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from accounts.models import User
-from systems.models import System
+from systems.models import ApiEntity, System
 
 
 @pytest.mark.django_db
@@ -229,3 +229,223 @@ def test_system_ordering() -> None:
     )
 
     assert list(System.objects.all()) == [newer_system, older_system]
+
+
+# TESTS FOR API ENTITY
+
+
+@pytest.mark.django_db
+def test_api_entity_can_be_created() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    api_entity = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    assert api_entity.system == system
+    assert api_entity.name == "PostsAPI"
+    assert api_entity.key_hash == "test-key-hash"
+    assert api_entity.key_created is not None
+    assert api_entity.created_at is not None
+    assert api_entity.api_key_stale is False
+
+
+@pytest.mark.django_db
+def test_api_entity_requires_system() -> None:
+    api_entity = ApiEntity(
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    with pytest.raises(ValidationError):
+        api_entity.full_clean()
+
+
+@pytest.mark.django_db
+def test_api_entity_requires_name() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    api_entity = ApiEntity(
+        system=system,
+        key_hash="test-key-hash",
+    )
+
+    with pytest.raises(ValidationError):
+        api_entity.full_clean()
+
+
+@pytest.mark.django_db
+def test_api_entity_requires_key_hash() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    api_entity = ApiEntity(
+        system=system,
+        name="PostsAPI",
+    )
+
+    with pytest.raises(ValidationError):
+        api_entity.full_clean()
+
+
+@pytest.mark.django_db
+def test_api_entity_belongs_to_system() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+    api_entity = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    assert api_entity.system == system
+    assert list(system.api_entities.all()) == [api_entity]
+
+
+@pytest.mark.django_db
+def test_system_can_have_multiple_api_entities() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    posts_api = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="posts-key-hash",
+    )
+    users_api = ApiEntity.objects.create(
+        system=system,
+        name="UsersAPI",
+        key_hash="users-key-hash",
+    )
+
+    assert system.api_entities.count() == 2
+    assert set(system.api_entities.all()) == {posts_api, users_api}
+
+
+@pytest.mark.django_db
+def test_api_entity_defaults_to_not_stale() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    api_entity = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    assert api_entity.api_key_stale is False
+
+
+@pytest.mark.django_db
+def test_deleting_system_deletes_api_entities() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+    api_entity = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    api_entity_id = api_entity.pk
+    system.delete()
+
+    assert not ApiEntity.objects.filter(pk=api_entity_id).exists()
+
+
+@pytest.mark.django_db
+def test_api_entity_str() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+    api_entity = ApiEntity.objects.create(
+        system=system,
+        name="PostsAPI",
+        key_hash="test-key-hash",
+    )
+
+    assert str(api_entity) == "API Entity PostsAPI, belonging to system Test System"
+
+
+@pytest.mark.django_db
+def test_api_entity_ordering() -> None:
+    owner = User.objects.create_user(
+        username="testuser",
+        email="owner@example.com",
+        password="password123",
+    )
+    system = System.objects.create(
+        name="Test System",
+        owner=owner,
+    )
+
+    older_entity = ApiEntity.objects.create(
+        system=system,
+        name="OlderAPI",
+        key_hash="older-key-hash",
+    )
+    newer_entity = ApiEntity.objects.create(
+        system=system,
+        name="NewerAPI",
+        key_hash="newer-key-hash",
+    )
+
+    assert list(ApiEntity.objects.all()) == [newer_entity, older_entity]
