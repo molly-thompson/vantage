@@ -459,3 +459,109 @@ def test_incident_note_ordering(log: Log, user: User) -> None:
     )
 
     assert list(IncidentNote.objects.all()) == [older_note, newer_note]
+
+
+# TESTS FOR LOGTAG
+
+
+@pytest.mark.django_db
+def test_log_tag_can_be_created() -> None:
+    tag = LogTag.objects.create(
+        name="Performance",
+    )
+
+    assert tag.name == "Performance"
+    assert tag.slug == "performance"
+
+
+@pytest.mark.django_db
+def test_log_tag_generates_slug_from_name() -> None:
+    tag = LogTag.objects.create(
+        name="Database Error",
+    )
+
+    assert tag.slug == "database-error"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "name, expected_slug",
+    [
+        ("Performance", "performance"),
+        ("Database Error", "database-error"),
+        ("API", "api"),
+        ("Slow Query!", "slow-query"),
+        ("Multiple   Spaces", "multiple-spaces"),
+    ],
+)
+def test_log_tag_slugification(name: str, expected_slug: str) -> None:
+    tag = LogTag.objects.create(name=name)
+
+    assert tag.slug == expected_slug
+
+
+@pytest.mark.django_db
+def test_log_tag_preserves_explicit_slug() -> None:
+    tag = LogTag.objects.create(
+        name="Performance",
+        slug="custom-performance",
+    )
+
+    assert tag.slug == "custom-performance"
+
+
+@pytest.mark.django_db
+def test_log_tag_does_not_overwrite_existing_slug_on_save() -> None:
+    tag = LogTag.objects.create(
+        name="Performance",
+        slug="custom-performance",
+    )
+
+    tag.name = "Database Performance"
+    tag.save()
+    tag.refresh_from_db()
+
+    assert tag.slug == "custom-performance"
+
+
+@pytest.mark.django_db
+def test_log_tag_requires_name() -> None:
+    tag = LogTag()
+
+    with pytest.raises(ValidationError):
+        tag.full_clean()
+
+
+@pytest.mark.django_db
+def test_log_tag_name_must_be_unique() -> None:
+    LogTag.objects.create(name="Performance")
+
+    duplicate = LogTag(name="Performance")
+
+    with pytest.raises(ValidationError):
+        duplicate.full_clean()
+
+
+@pytest.mark.django_db
+def test_log_tag_slug_must_be_unique() -> None:
+    LogTag.objects.create(
+        name="Performance",
+        slug="performance",
+    )
+
+    duplicate = LogTag(
+        name="Application Performance",
+        slug="performance",
+    )
+
+    with pytest.raises(ValidationError):
+        duplicate.full_clean()
+
+
+@pytest.mark.django_db
+def test_log_tag_str() -> None:
+    tag = LogTag.objects.create(
+        name="Performance",
+    )
+
+    assert str(tag) == "#Performance"
