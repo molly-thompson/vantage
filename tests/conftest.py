@@ -3,6 +3,7 @@ from typing import Any
 import pytest
 
 from accounts.models import User
+from logs.models import Log
 from systems.models import ApiEntity, System
 
 
@@ -34,4 +35,13 @@ def api_entity(system: System) -> ApiEntity:
         system=system,
         name="TestAPI",
         key_hash="test-key-hash",
+    )
+
+
+@pytest.fixture
+def log(user: User) -> Log:
+    return Log.objects.create(
+        title="Test Log",
+        body="Test log body",
+        creator_user=user,
     )
