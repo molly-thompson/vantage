@@ -3,6 +3,7 @@ from django.contrib.messages import add_message
 from django.contrib.messages import constants as message_levels
 from django.http import HttpRequest
 from django.template.loader import render_to_string
+from django.test import Client
 
 
 # TEST BASE.HTML
@@ -59,3 +60,19 @@ def test_base_template_renders_message_type(
     assert f"text-{message_type}" in content
     assert f"bg-{message_type}/10" in content
     assert f"border-{message_type}/20" in content
+
+
+# TEST ERROR PAGES RENDER
+def test_404_page_renders(client: Client) -> None:
+    response = client.get("/definitely-does-not-exist/")
+
+    assert response.status_code == 404
+    assert "Error 404" in response.content.decode()
+    assert "Page not found" in response.content.decode()
+
+
+def test_500_page_renders() -> None:
+    content = render_to_string("500.html")
+
+    assert "Error 500" in content
+    assert "Something went wrong" in content
