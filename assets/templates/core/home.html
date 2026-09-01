@@ -1,3 +1,34 @@
 {% extends "base.html" %}
 
-{% block content %}{% endblock %}
+{% block title %}Vantage{% endblock %}
+
+{% block content %}
+<div class="overflow-hidden">
+	<section class="relative border-b border-base-300 bg-base-200">
+		<div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:px-10 sm:py-24 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-16">
+			<div class="max-w-2xl">
+				<div class="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+					<span class="h-2 w-2 rounded-full bg-primary shadow-[0_0_0_4px] shadow-primary/15" aria-hidden="true"></span>
+					Developer telemetry
+				</div>
+				<h1 class="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-base-content sm:text-6xl">
+					See what your systems are telling you.
+				</h1>
+				<p class="mt-6 max-w-xl text-lg leading-8 text-neutral-content">
+					Vantage brings API health, application logs, and incident context into one focused workspace, so teams can move from signal to understanding without losing the thread.
+				</p>
+				<div class="mt-8 flex flex-wrap items-center gap-3">
+					<a href="{% url 'account_signup' %}" class="btn btn-primary px-6">Create your account</a>
+					<a href="{% url 'account_login' %}" class="btn btn-ghost">Log in <span aria-hidden="true">&rarr;</span></a>
+				</div>
+				<div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-muted-content">
+					<span>API-first</span>
+					<span>Built for teams</span>
+					<span class="text-success">No noise. Just signal.</span>
+				</div>
+			</div>
+
+	</section>
+
+{% block content %}{% endblock %}</div>
+{% endblock %}
