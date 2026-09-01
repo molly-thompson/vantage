@@ -136,5 +136,14 @@
 		</div>
 	</section>
 
-{% block content %}{% endblock %}</div>
+	<section class="mx-auto max-w-7xl px-6 py-20 text-center sm:px-10 lg:px-12">
+		<p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">Start with better visibility</p>
+		<h2 class="mx-auto mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">Make the next incident easier to understand.</h2>
+		<p class="mx-auto mt-4 max-w-xl text-neutral-content">Create your Vantage workspace and give your team one place for the signals and the story behind them.</p>
+		<div class="mt-8 flex flex-wrap justify-center gap-3">
+			<a href="{% url 'account_signup' %}" class="btn btn-primary px-6">Create your account</a>
+			<a href="{% url 'account_login' %}" class="btn btn-outline btn-primary">Already have an account?</a>
+		</div>
+	</section>
+</div>
 {% endblock %}
