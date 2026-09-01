@@ -36,5 +36,11 @@
             {% endif %}
         </div>
     </nav>
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="border-t border-base-300 px-6 py-6 text-center text-xs text-muted-content">
+        &copy; Vantage 2026. Developed by Molly Thompson
+    </footer>
 </body>
 </html>
