@@ -1,3 +1,149 @@
 {% extends "base.html" %}
 
-{% block content %}{% endblock %}
+{% block title %}Vantage{% endblock %}
+
+{% block content %}
+<div class="overflow-hidden">
+	<section class="relative border-b border-base-300 bg-base-200">
+		<div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:px-10 sm:py-24 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-16">
+			<div class="max-w-2xl">
+				<div class="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+					<span class="h-2 w-2 rounded-full bg-primary shadow-[0_0_0_4px] shadow-primary/15" aria-hidden="true"></span>
+					Developer telemetry
+				</div>
+				<h1 class="max-w-xl text-4xl font-semibold leading-tight tracking-tight text-base-content sm:text-6xl">
+					See what your systems are telling you.
+				</h1>
+				<p class="mt-6 max-w-xl text-lg leading-8 text-neutral-content">
+					Vantage brings API health, application logs, and incident context into one focused workspace, so teams can move from signal to understanding without losing the thread.
+				</p>
+				<div class="mt-8 flex flex-wrap items-center gap-3">
+					<a href="{% url 'account_signup' %}" class="btn btn-primary px-6">Create your account</a>
+					<a href="{% url 'account_login' %}" class="btn btn-ghost">Log in <span aria-hidden="true">&rarr;</span></a>
+				</div>
+				<div class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-muted-content">
+					<span>API-first</span>
+					<span>Built for teams</span>
+					<span class="text-success">No noise. Just signal.</span>
+				</div>
+			</div>
+
+			<div class="mockup-window border border-base-300 bg-base-100 shadow-2xl">
+				<div class="border-t border-base-300 bg-base-200 p-4 sm:p-5">
+					<div class="mb-5 flex items-center justify-between gap-4">
+						<div>
+							<p class="font-mono text-xs text-muted-content">WORKSPACE / OVERVIEW</p>
+							<p class="mt-1 font-semibold">System telemetry</p>
+						</div>
+						<span class="badge badge-success badge-outline gap-1 font-mono text-xs"><span class="h-1.5 w-1.5 rounded-full bg-success" aria-hidden="true"></span>Operational</span>
+					</div>
+					<div class="grid grid-cols-3 gap-2 sm:gap-3">
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Requests</p>
+							<p class="mt-2 text-xl font-semibold">18.4k</p>
+							<p class="mt-1 font-mono text-[10px] text-success">+12.8%</p>
+						</div>
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Errors</p>
+							<p class="mt-2 text-xl font-semibold">0.24%</p>
+							<p class="mt-1 font-mono text-[10px] text-success">-0.08%</p>
+						</div>
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Latency</p>
+							<p class="mt-2 text-xl font-semibold">184ms</p>
+							<p class="mt-1 font-mono text-[10px] text-warning">p95</p>
+						</div>
+					</div>
+					<div class="mt-3 grid gap-3 sm:grid-cols-[1.15fr_0.85fr]">
+						<div class="rounded-box border border-base-300 bg-base-100 p-4">
+							<div class="flex items-center justify-between">
+								<p class="font-mono text-xs text-muted-content">Recent activity</p>
+								<span class="badge badge-ghost badge-sm">Preview</span>
+							</div>
+							<div class="mt-4 space-y-3 font-mono text-[11px]">
+								<div class="flex gap-3"><span class="text-success">09:42</span><span class="truncate text-neutral-content">POST /v1/events accepted</span></div>
+								<div class="flex gap-3"><span class="text-success">09:41</span><span class="truncate text-neutral-content">GET /health responded 200</span></div>
+								<div class="flex gap-3"><span class="text-warning">09:39</span><span class="truncate text-neutral-content">worker.queue latency elevated</span></div>
+							</div>
+						</div>
+						<div class="alert alert-outline alert-warning items-start rounded-box border p-4 text-base-content">
+							<div>
+								<p class="font-mono text-xs uppercase text-warning">Incident note</p>
+								<p class="mt-2 text-sm font-semibold">Queue latency needs context.</p>
+								<p class="mt-1 text-xs leading-5 text-base-content opacity-70">Capture the signal, owner, and next step in one place.</p>
+							</div>
+						</div>
+					</div>
+					<p class="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-muted-content">Illustrative workspace preview</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-12">
+		<div class="max-w-2xl">
+			<p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">One view, useful context</p>
+			<h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Telemetry that helps people decide.</h2>
+		</div>
+		<div class="mt-10 grid gap-4 md:grid-cols-3">
+			<article class="card border border-base-300 bg-base-200">
+				<div class="card-body">
+					<span class="badge badge-info badge-outline w-fit font-mono">01 / Health</span>
+					<h3 class="card-title mt-3">Know when APIs drift.</h3>
+					<p class="text-sm leading-6 text-neutral-content">Track the signals that tell you whether a service is available, responsive, and behaving as expected.</p>
+				</div>
+			</article>
+			<article class="card border border-base-300 bg-base-200">
+				<div class="card-body">
+					<span class="badge badge-primary badge-outline w-fit font-mono">02 / Logs</span>
+					<h3 class="card-title mt-3">Keep the useful details.</h3>
+					<p class="text-sm leading-6 text-neutral-content">Turn raw application output into searchable, tagged signals your whole team can understand.</p>
+				</div>
+			</article>
+			<article class="card border border-base-300 bg-base-200">
+				<div class="card-body">
+					<span class="badge badge-warning badge-outline w-fit font-mono">03 / Incidents</span>
+					<h3 class="card-title mt-3">Leave a better trail.</h3>
+					<p class="text-sm leading-6 text-neutral-content">Capture ownership, decisions, and follow-up while the context is still fresh.</p>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<section class="border-y border-base-300 bg-base-200">
+		<div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:px-10 lg:grid-cols-[0.8fr_1.2fr] lg:px-12">
+			<div>
+				<p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">A calmer incident loop</p>
+				<h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">From first signal to shared understanding.</h2>
+			</div>
+			<ol class="grid gap-8 sm:grid-cols-3">
+				<li class="border-l-2 border-primary pl-4">
+					<span class="font-mono text-xs text-primary">01</span>
+					<h3 class="mt-3 font-semibold">Send the signal</h3>
+					<p class="mt-2 text-sm leading-6 text-neutral-content">Connect an API or system and collect the events that matter.</p>
+				</li>
+				<li class="border-l-2 border-secondary pl-4">
+					<span class="font-mono text-xs text-secondary-content">02</span>
+					<h3 class="mt-3 font-semibold">Find the pattern</h3>
+					<p class="mt-2 text-sm leading-6 text-neutral-content">Use health, latency, errors, and logs to locate the change.</p>
+				</li>
+				<li class="border-l-2 border-accent pl-4">
+					<span class="font-mono text-xs text-accent">03</span>
+					<h3 class="mt-3 font-semibold">Record the context</h3>
+					<p class="mt-2 text-sm leading-6 text-neutral-content">Leave the next person a clear incident note and next step.</p>
+				</li>
+			</ol>
+		</div>
+	</section>
+
+	<section class="mx-auto max-w-7xl px-6 py-20 text-center sm:px-10 lg:px-12">
+		<p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">Start with better visibility</p>
+		<h2 class="mx-auto mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">Make the next incident easier to understand.</h2>
+		<p class="mx-auto mt-4 max-w-xl text-neutral-content">Create your Vantage workspace and give your team one place for the signals and the story behind them.</p>
+		<div class="mt-8 flex flex-wrap justify-center gap-3">
+			<a href="{% url 'account_signup' %}" class="btn btn-primary px-6">Create your account</a>
+			<a href="{% url 'account_login' %}" class="btn btn-outline btn-primary">Already have an account?</a>
+		</div>
+	</section>
+</div>
+{% endblock %}
