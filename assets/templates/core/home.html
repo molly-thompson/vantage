@@ -28,6 +28,57 @@
 				</div>
 			</div>
 
+			<div class="mockup-window border border-base-300 bg-base-100 shadow-2xl">
+				<div class="border-t border-base-300 bg-base-200 p-4 sm:p-5">
+					<div class="mb-5 flex items-center justify-between gap-4">
+						<div>
+							<p class="font-mono text-xs text-muted-content">WORKSPACE / OVERVIEW</p>
+							<p class="mt-1 font-semibold">Production telemetry</p>
+						</div>
+						<span class="badge badge-success badge-outline gap-1 font-mono text-xs"><span class="h-1.5 w-1.5 rounded-full bg-success" aria-hidden="true"></span>Operational</span>
+					</div>
+					<div class="grid grid-cols-3 gap-2 sm:gap-3">
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Requests</p>
+							<p class="mt-2 text-xl font-semibold">18.4k</p>
+							<p class="mt-1 font-mono text-[10px] text-success">+12.8%</p>
+						</div>
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Errors</p>
+							<p class="mt-2 text-xl font-semibold">0.24%</p>
+							<p class="mt-1 font-mono text-[10px] text-success">-0.08%</p>
+						</div>
+						<div class="rounded-box border border-base-300 bg-base-100 p-3">
+							<p class="font-mono text-[10px] uppercase text-muted-content">Latency</p>
+							<p class="mt-2 text-xl font-semibold">184ms</p>
+							<p class="mt-1 font-mono text-[10px] text-warning">p95</p>
+						</div>
+					</div>
+					<div class="mt-3 grid gap-3 sm:grid-cols-[1.15fr_0.85fr]">
+						<div class="rounded-box border border-base-300 bg-base-100 p-4">
+							<div class="flex items-center justify-between">
+								<p class="font-mono text-xs text-muted-content">Recent activity</p>
+								<span class="badge badge-ghost badge-sm">Preview</span>
+							</div>
+							<div class="mt-4 space-y-3 font-mono text-[11px]">
+								<div class="flex gap-3"><span class="text-success">09:42</span><span class="truncate text-neutral-content">POST /v1/events accepted</span></div>
+								<div class="flex gap-3"><span class="text-success">09:41</span><span class="truncate text-neutral-content">GET /health responded 200</span></div>
+								<div class="flex gap-3"><span class="text-warning">09:39</span><span class="truncate text-neutral-content">worker.queue latency elevated</span></div>
+							</div>
+						</div>
+						<div class="alert alert-outline alert-warning items-start rounded-box border p-4 text-base-content">
+							<div>
+								<p class="font-mono text-xs uppercase text-warning">Incident note</p>
+								<p class="mt-2 text-sm font-semibold">Queue latency needs context.</p>
+								<p class="mt-1 text-xs leading-5 text-base-content opacity-70">Capture the signal, owner, and next step in one place.</p>
+							</div>
+						</div>
+					</div>
+					<p class="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-muted-content">Illustrative workspace preview</p>
+				</div>
+			</div>
+		</div>
+	</section>
 	</section>
 
 {% block content %}{% endblock %}</div>
