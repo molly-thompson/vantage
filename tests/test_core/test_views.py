@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 def test_core_index_view(client: Client) -> None:
-    response = client.get(reverse("core:index"))
+    response = client.get(reverse("core:home"))
 
     assert response.status_code == 200
     assert "base.html" in [template.name for template in response.templates]
