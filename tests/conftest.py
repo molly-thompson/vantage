@@ -13,7 +13,8 @@ from systems.models import ApiEntity, System
 
 
 @pytest.fixture(autouse=True)
-def disable_ssl_redirect(settings: Any) -> None:
+def configure_test_settings(settings: Any) -> None:
+    settings.DEBUG = False
     settings.SECURE_SSL_REDIRECT = False
 
 
