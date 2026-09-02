@@ -74,7 +74,7 @@ jobs:
         run: uv run python manage.py migrate
 
       - name: Collect static files
-        run: python manage.py collectstatic --noinput
+        run: uv run python manage.py collectstatic --noinput
 
       - name: Run tests
         run: uv run pytest
