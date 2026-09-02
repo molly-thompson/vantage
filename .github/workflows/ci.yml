@@ -58,7 +58,7 @@ jobs:
       - name: Build Tailwind CSS
         run: |
           ./build_files/tailwindcss \
-          -i ./assets/static/css/input.css \
+          -i ./build_files/input.css \
           -o ./assets/static/css/output.css
 
       - name: Lint
