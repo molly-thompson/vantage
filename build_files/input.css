@@ -1,10 +1,13 @@
 /* stylelint-disable */
 @import "tailwindcss";
 
-/* Relative path to DaisyUI bundle files */
-@plugin "./../../../build_files/daisyui.mjs";
+@source not "./tailwindcss";
+@source not "./daisyui{,*}.mjs";
 
-@plugin "./../../../build_files/daisyui-theme.mjs" {
+/* Relative path to DaisyUI bundle files */
+@plugin "./daisyui.mjs";
+
+@plugin "./daisyui-theme.mjs" {
   name: "vantage";
   default: true;
   prefersdark: true;
