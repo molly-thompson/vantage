@@ -601,6 +601,7 @@ dependencies = [
     { name = "django-allauth" },
     { name = "gunicorn" },
     { name = "psycopg", extra = ["binary", "pool"] },
+    { name = "python-dotenv" },
     { name = "whitenoise" },
 ]
 
@@ -621,6 +622,7 @@ requires-dist = [
     { name = "django-allauth", specifier = ">=65.19,<66" },
     { name = "gunicorn", specifier = ">=26.2.0" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.3.4" },
+    { name = "python-dotenv", specifier = ">=1.2.3" },
     { name = "whitenoise", specifier = ">=6.12.0" },
 ]
 
