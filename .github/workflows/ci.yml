@@ -58,7 +58,7 @@ jobs:
       - name: Build Tailwind CSS
         run: |
           ./build_files/tailwindcss \
-          -i ./assets/static/css/input.css \
+          -i ./build_files/input.css \
           -o ./assets/static/css/output.css
 
       - name: Lint
@@ -72,6 +72,9 @@ jobs:
 
       - name: Run migrations
         run: uv run python manage.py migrate
+
+      - name: Collect static files
+        run: uv run python manage.py collectstatic --noinput
 
       - name: Run tests
         run: uv run pytest

@@ -30,14 +30,18 @@ load_dotenv()
 SECRET_KEY = os.environ["SECRET_KEY"]
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-# If debug setting not configured, default to safer value
+# If environment is not configured, default to development
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "development").lower()
+
+# If debug setting not configured, default to False
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-if not DEBUG:
+if ENVIRONMENT == "production":
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # SECURE_HSTS_SECONDS = 31536000
 
 ALLOWED_HOSTS = [
     host.strip()
@@ -73,6 +77,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -177,6 +182,15 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / "build_files" / "staticfiles"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration

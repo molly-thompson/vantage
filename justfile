@@ -24,7 +24,7 @@ makemigrations app="":
 
 # Build Tailwind CSS files
 tailwind:
-    {{TAILWIND_BIN}} -i ./assets/static/css/input.css -o ./assets/static/css/output.css
+    {{TAILWIND_BIN}} -i ./build_files/input.css -o ./assets/static/css/output.css
 
 
 # ENTER PROCESSES
@@ -47,7 +47,7 @@ lint-watch:
 
 # Run Tailwind watcher
 tailwind-watch:
-    {{TAILWIND_BIN}} -i ./assets/static/css/input.css -o ./assets/static/css/output.css --watch
+    {{TAILWIND_BIN}} -i ./build_files/input.css -o ./assets/static/css/output.css --watch
 
 
 # TIDYING & CHECKING: COMPOUND COMMANDS
