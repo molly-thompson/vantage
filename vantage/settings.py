@@ -136,9 +136,16 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password2*",
 ]
 
+LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "/account/dashboard"
-
 LOGOUT_REDIRECT_URL = "/"
+
+# Let Allauth and Django admin handle their own authentication,
+# rather than applying Vantage's global login requirement.
+PUBLIC_PATHS = [
+    r"^/auth/.*",
+    r"^/site-admin/.*",
+]
 
 
 # Password validation
