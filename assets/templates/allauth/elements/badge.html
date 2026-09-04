@@ -1,5 +1,5 @@
 {% load allauth %}
-<strong {% if attrs.title %}title="{{ attrs.title }}"{% endif %}>
+<strong class="badge badge-outline badge-primary" {% if attrs.title %}title="{{ attrs.title }}"{% endif %}>
     {% slot %}
     {% endslot %}
 </strong>
