@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% block head_title %}{% endblock head_title %}
+{% endblock title %}
+
+{% block body %}
+    <div class="mx-auto w-full max-w-3xl px-6 py-10 sm:px-10 sm:py-14">
+        <section class="rounded-box text-center bg-base-100 p-6 shadow-xl sm:p-8">
+            {% block content %}
+            {% endblock content %}
+        </section>
+    </div>
+{% endblock body %}
+

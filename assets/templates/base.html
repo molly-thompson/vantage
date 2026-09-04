@@ -42,7 +42,7 @@
             {% with message_type=message.tags %}
                 <div class="space-y-3">
                     <!-- Style alert according to type -->
-                    <div class="alert alert-{{message_type}} border border-{{message_type}}/20 bg-{{message_type}}/10 p-4 text-sm text-{{message_type}}">
+                    <div class="alert border border-{{message_type}}/20 bg-{{message_type}}/10 p-4 text-sm text-{{message_type}}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-current">
                             <!-- Show icon according to alert type -->
                             {% if message_type == "success" %}
@@ -63,11 +63,14 @@
         {% endfor %}
     {% endif %}
     <main class="flex-1">
-        {% block content %}{% endblock %}
+        {% block body %}
+            {% block content %}{% endblock %}
+        {% endblock body %}
     </main>
     <footer class="border-t border-base-300 px-6 py-6 text-center text-xs text-muted-content">
         &copy; Vantage 2026. Developed by Molly Thompson
     </footer>
+    {% block extra_body %}{% endblock %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>
