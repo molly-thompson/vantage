@@ -20,6 +20,7 @@ dev = [
     "django-stubs[compatible-mypy]>=6.1.0",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
     "pytest-django>=4.14.0",
     "python-dotenv>=1.2.3",
     "ruff>=0.16.4",
@@ -57,4 +58,10 @@ testpaths = [
     "tests/test_core",
     "tests/test_logs",
     "tests/test_systems",
+]
+addopts = [
+    "--cov=accounts",
+    "--cov=core --cov=logs",
+    "--cov=systems",
+    "--cov-report=term-missing",
 ]
