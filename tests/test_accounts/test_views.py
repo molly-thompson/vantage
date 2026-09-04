@@ -1,9 +1,14 @@
+import pytest
 from django.test import Client
 from django.urls import reverse
 
+from accounts.models import User
+
 
 # TESTS FOR PROJECT URL ENDPOINTS
-def test_accounts_dashboard_view(client: Client) -> None:
+@pytest.mark.django_db
+def test_accounts_dashboard_view(client: Client, user: User) -> None:
+    client.force_login(user)
     response = client.get(reverse("accounts:dashboard"))
 
     assert response.status_code == 200
